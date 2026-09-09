@@ -22,25 +22,25 @@ app.use(express.static(publicPath));
 const Database = require('better-sqlite3');
 const db = new Database('chat.db');
 
-const { spawn } = require('child_process');
+// const { spawn } = require('child_process');
 
-const tunnel = spawn('cloudflared', ['tunnel', '--url', 'localhost:3000']);
+// const tunnel = spawn('cloudflared', ['tunnel', '--url', 'localhost:3000']);
 
-tunnel.stderr.on('data', (data) => {
-    const output = data.toString();
-    const match = output.match(/https:\/\/[a-z0-9\-]+\.trycloudflare\.com/);
-    if (match) {
-        console.log('URL:', match[0]);
-        fetch('https://api.jsonbin.io/v3/b/6a25b2abf5f4af5e29c76378', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Master-Key': '$2a$10$U/koFXwWmYWhIHOD62IKxOOWGgy58cBUPNXkwG6Mmniv2.zc67FcO'
-            },
-            body: JSON.stringify({ url: match[0] })
-        });
-    }
-});
+// tunnel.stderr.on('data', (data) => {
+//     const output = data.toString();
+//     const match = output.match(/https:\/\/[a-z0-9\-]+\.trycloudflare\.com/);
+//     if (match) {
+//         console.log('URL:', match[0]);
+//         fetch('https://api.jsonbin.io/v3/b/6a25b2abf5f4af5e29c76378', {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'X-Master-Key': '$2a$10$U/koFXwWmYWhIHOD62IKxOOWGgy58cBUPNXkwG6Mmniv2.zc67FcO'
+//             },
+//             body: JSON.stringify({ url: match[0] })
+//         });
+//     }
+// });
 
 // const clearDatabaseData = db.transaction(() => {
 //   const tables = db.prepare(`
